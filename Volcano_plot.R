@@ -59,3 +59,15 @@ ggplot(data=data.mat, aes(x=log2(Fold_Change..Smokers_Vs_Control.), y=-log10(p.v
   scale_color_manual(values=c("blue", "black", "red"))+
   geom_vline(xintercept=c(-1, 1), col="red") +
   geom_hline(yintercept=-log10(0.05), col="red")
+
+#### Volcano plot with different symbols ####
+ggplot(data=hie3, aes(x=log2(`Fold Change (HIE3/Healthy)`), y=-log10(`P-value`), label = Gene)) +
+  geom_point(data=subset(hie3, hie3$diffexpressed == "UP"), shape=24, fill="green", size = 3, stroke = 0) +
+  geom_point(data=subset(hie3, hie3$diffexpressed == "DOWN"), shape=25, fill="red", size = 3, stroke = 0) +
+  geom_point(data=subset(hie3, hie3$diffexpressed == "NO"), color="black", fill="#B8B7B5", size = 2, shape = 21, stroke = 0.1) +
+  theme_minimal() +
+  geom_text_repel(data=subset(hie3, hie3$diffexpressed == "UP"), aes(label=Gene),hjust=0, vjust=0, size = 5, col="black") +
+  geom_text_repel(data=subset(hie3, hie3$diffexpressed =="DOWN"), aes(label=Gene),hjust=0, vjust=0, size = 5, col="black") +
+  #scale_color_manual(values=c("red", "#B8B7B5", "green"))+
+  geom_vline(xintercept=c(-0.58, 0.58), col="blue", linetype = "dashed") +
+  geom_hline(yintercept=-log10(0.05), col="blue", linetype = "dashed")
